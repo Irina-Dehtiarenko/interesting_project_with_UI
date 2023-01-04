@@ -67,8 +67,59 @@ header.prepend(message);
 
 document.querySelector('.btn--close-cookie').addEventListener('click', () => {
   message.remove();
-  // the old way for do it:
+  // the old way for do the same:
   // message.parentElement.removeChild(message)
 });
 
 /////////////////
+
+// Styles, atributes and classes
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%'; // = inline styles in HTML
+
+console.log(message.style.backgroundColor); // rgb(55, 56, 61)
+// działa tylko dla stylów name zaimplementowanych liniowo w HTML
+
+// console.log(getComputedStyle(message)); //uzyskamy wszystkie style
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+document.documentElement.style.setProperty('--color-primary', 'orangered'); //zmieniamy zmienne CSS
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt); //Bankist logo
+console.log(logo.src); //http://127.0.0.1:8080/img/logo.png
+console.log(logo.className);
+
+logo.alt = 'Beautiful minimalist logo'; //changing slt atribute
+
+// Non-standart attribute
+console.log(logo.designer); //doesn't work
+console.log(logo.getAttribute('designer')); //work
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src); //http://127.0.0.1:8080/img/logo.png - absolute
+console.log(logo.getAttribute('src')); //img/logo.png - relative, żywy url, zależny od lokalizacji foldera
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href); //http://127.0.0.1:8080/#
+console.log(link.getAttribute('href')); //#
+
+// Data attributes
+console.log(logo.dataset.versionNumber); //3.0
+
+// Clases
+
+logo.classList.add('c', 'j');
+logo.classList.remove('c', 'l');
+logo.classList.toggle('c');
+logo.classList.contains('c'); //not includes
+
+// don't use
+logo.className = 'jonas'; //zastąpi wszystkie klassy
+///////////////////////////////////
