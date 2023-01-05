@@ -34,14 +34,15 @@ document.addEventListener('keydown', function (e) {
 // notes
 // /////////////////
 // SELECTED ELEMENTS
-console.log(document.documentElement); //all HTML document
-console.log(document.head);
-console.log(document.body);
+// console.log(document.documentElement); //all HTML document
+// console.log(document.head);
+// console.log(document.body);
 const allSelections = document.querySelectorAll('.section');
 const header = document.querySelector('.header');
 document.getElementById('section--1');
 const allButtons = document.getElementsByTagName('button');
-console.log(allButtons); //HTMLCollection(9) - like an array[button.btn--text.btn--scroll-to, button.btn.operations__tab.operations__tab--1.operations__tab--active]
+
+// console.log(allButtons); //HTMLCollection(9) - like an array[button.btn--text.btn--scroll-to, button.btn.operations__tab.operations__tab--1.operations__tab--active]
 //na żywo onawia się informacja
 
 document.getElementsByClassName('btn'); //HTMLCollection(9)
@@ -78,12 +79,12 @@ document.querySelector('.btn--close-cookie').addEventListener('click', () => {
 message.style.backgroundColor = '#37383d';
 message.style.width = '120%'; // = inline styles in HTML
 
-console.log(message.style.backgroundColor); // rgb(55, 56, 61)
+// console.log(message.style.backgroundColor); // rgb(55, 56, 61)
 // działa tylko dla stylów name zaimplementowanych liniowo w HTML
 
 // console.log(getComputedStyle(message)); //uzyskamy wszystkie style
-console.log(getComputedStyle(message).color);
-console.log(getComputedStyle(message).height);
+// console.log(getComputedStyle(message).color);
+// console.log(getComputedStyle(message).height);
 
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
@@ -92,36 +93,36 @@ message.style.height =
 
 // Attributes
 const logo = document.querySelector('.nav__logo');
-console.log(logo.alt); //Bankist logo
-console.log(logo.src); //http://127.0.0.1:8080/img/logo.png
-console.log(logo.className);
+// console.log(logo.alt); //Bankist logo
+// console.log(logo.src); //http://127.0.0.1:8080/img/logo.png
+// console.log(logo.className);
 
 logo.alt = 'Beautiful minimalist logo'; //changing slt atribute
 
-// Non-standart attribute
-console.log(logo.designer); //doesn't work
-console.log(logo.getAttribute('designer')); //work
-logo.setAttribute('company', 'Bankist');
+// // Non-standart attribute
+// console.log(logo.designer); //doesn't work
+// console.log(logo.getAttribute('designer')); //work
+// logo.setAttribute('company', 'Bankist');
 
-console.log(logo.src); //http://127.0.0.1:8080/img/logo.png - absolute
-console.log(logo.getAttribute('src')); //img/logo.png - relative, żywy url, zależny od lokalizacji foldera
+// console.log(logo.src); //http://127.0.0.1:8080/img/logo.png - absolute
+// console.log(logo.getAttribute('src')); //img/logo.png - relative, żywy url, zależny od lokalizacji foldera
 
-const link = document.querySelector('.nav__link--btn');
-console.log(link.href); //http://127.0.0.1:8080/#
-console.log(link.getAttribute('href')); //#
+// const link = document.querySelector('.nav__link--btn');
+// console.log(link.href); //http://127.0.0.1:8080/#
+// console.log(link.getAttribute('href')); //#
 
 // Data attributes
-console.log(logo.dataset.versionNumber); //3.0
+// console.log(logo.dataset.versionNumber); //3.0
 
 // Clases
 
-logo.classList.add('c', 'j');
-logo.classList.remove('c', 'l');
-logo.classList.toggle('c');
-logo.classList.contains('c'); //not includes
+// logo.classList.add('c', 'j');
+// logo.classList.remove('c', 'l');
+// logo.classList.toggle('c');
+// logo.classList.contains('c'); //not includes
 
 // don't use
-logo.className = 'jonas'; //zastąpi wszystkie klassy
+// logo.className = 'jonas'; //zastąpi wszystkie klassy
 
 ///////////////////////////////////
 
@@ -130,17 +131,17 @@ const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', e => {
   const s1coords = section1.getBoundingClientRect();
-  console.log(s1coords);
+  // console.log(s1coords);
 
-  console.log(e.target.getBoundingClientRect());
+  // console.log(e.target.getBoundingClientRect());
 
-  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+  // console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
 
-  console.log(
-    'height/width viewport',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  );
+  // console.log(
+  //   'height/width viewport',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // );
 
   // Scrolling
   // window.scrollTo(
@@ -159,3 +160,24 @@ btnScrollTo.addEventListener('click', e => {
     behavior: 'smooth',
   });
 });
+
+const h1 = document.querySelector('h1');
+
+const alertH1 = e => {
+  alert('addEventListener: Great! You are reading the heading :D');
+
+  // h1.removeEventListener('mouseenter', alertH1);
+};
+
+h1.addEventListener('mouseenter', alertH1);
+
+setTimeout(() => {
+  h1.removeEventListener('mouseenter', alertH1);
+}, 3000);
+
+// Old way
+// h1.onmouseenter = e => {
+//   alert('onmouseenter: Great! You are reading the heading :D');
+// };
+
+// Remove
