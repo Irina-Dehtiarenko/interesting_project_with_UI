@@ -161,23 +161,58 @@ btnScrollTo.addEventListener('click', e => {
   });
 });
 
-const h1 = document.querySelector('h1');
+// // Remove
+// const h1 = document.querySelector('h1');
 
-const alertH1 = e => {
-  alert('addEventListener: Great! You are reading the heading :D');
+// const alertH1 = e => {
+//   alert('addEventListener: Great! You are reading the heading :D');
 
-  // h1.removeEventListener('mouseenter', alertH1);
-};
+// h1.removeEventListener('mouseenter', alertH1);
+// };
 
-h1.addEventListener('mouseenter', alertH1);
+// h1.addEventListener('mouseenter', alertH1);
 
-setTimeout(() => {
-  h1.removeEventListener('mouseenter', alertH1);
-}, 3000);
+// setTimeout(() => {
+//   h1.removeEventListener('mouseenter', alertH1);
+// }, 3000);
 
 // Old way
 // h1.onmouseenter = e => {
 //   alert('onmouseenter: Great! You are reading the heading :D');
 // };
 
-// Remove
+////////////////////////
+// Event propagation
+// rgb(255,255,255)
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+console.log(randomColor());
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('LINK', e.target, e.currentTarget);
+  // e.target - gdzie event się wydaży - nav__link
+  //e.currentTarget - element którego dotyczy obecne wydarzenie(albo ten, albo rodzic)
+  console.log(e.currentTarget === this); //true
+
+  // Stop propagation - not a good idea
+  // e.stopPropagation();
+});
+
+document.querySelector('.nav__links').addEventListener(
+  'click',
+  function (e) {
+    this.style.backgroundColor = randomColor();
+    console.log('CONTAINER', e.target, e.currentTarget); //nav__links,
+    // Stop propagation
+    // e.stopPropagation();
+  },
+  true
+);
+
+document.querySelector('.nav').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('NAV', e.target, e.currentTarget); //nav
+});
