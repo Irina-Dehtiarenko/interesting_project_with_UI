@@ -167,15 +167,56 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 
 // /////////////////
 // Sticky navigation
-const initialCoords = section1.getBoundingClientRect();
 
-console.log(initialCoords);
-window.addEventListener('scroll', function () {
-  // console.log(this.window.scrollY);
+// With the scroll event - małowydajny
+// const initialCoords = section1.getBoundingClientRect();
 
-  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
+// console.log(initialCoords);
+// window.addEventListener('scroll', function () {
+//   // console.log(this.window.scrollY);
+
+//   if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+// //////////////////////////////////////////////////
+// Sticky navigation:Intersection Observer Api
+// Examples:
+
+// const obsCallback = function (entries, observer) {
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+
+// const obsOptions = {
+//   root: null,
+//   threshold: [0, 0.2], //procenty które chcemy żeby były widoczne, zanim się wykona funkcja, [0 - odrazu jak się pojawi sekcja1, 0.2 - 20% widocznych od sekcji1]
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+
+// Using:
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+console.log(navHeight);
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  console.log(entry.isIntersecting);
+
+  entry.isIntersecting
+    ? nav.classList.remove('sticky')
+    : nav.classList.add('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0, //jak tylko element robi się niewidoczny
+  rootMargin: `-${navHeight}px`, //'-90px', //określa dodatkową pozycję w której zacznie wywołanie funkcja(w tym przypadku 90px to jest height naszej navigacji, która powinna się pojawić), % nie działa
 });
+headerObserver.observe(header);
 
 // /////////////////
 // notes
