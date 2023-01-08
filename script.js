@@ -11,6 +11,8 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 
+const nav = document.querySelector('.nav');
+
 ///////////////////////////////////////
 // Modal window
 
@@ -135,6 +137,33 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+// /////////////////
+// Menu fade animation
+
+// const handleHover = function (e, opacity) {
+// w drugim przypadku e  - domyślny parametr, i dodatkowo możemy dodać tylko jeden parametr, którym będzie 'this'
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+
+    const silblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    silblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+// nav.addEventListener('mouseover', function (e) {
+//   handleHover(e, 0.5);
+// });
+
+// Passing "argument" into handler
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+nav.addEventListener('mouseout', handleHover.bind(1));
 
 // /////////////////
 // notes
