@@ -200,11 +200,11 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 // Using:
 const header = document.querySelector('.header');
 const navHeight = nav.getBoundingClientRect().height;
-console.log(navHeight);
+// console.log(navHeight);
 
 const stickyNav = function (entries) {
   const [entry] = entries;
-  console.log(entry.isIntersecting);
+  // console.log(entry.isIntersecting);
 
   entry.isIntersecting
     ? nav.classList.remove('sticky')
@@ -222,7 +222,7 @@ headerObserver.observe(header);
 const allSections = document.querySelectorAll('.section');
 const revealSection = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
+  // console.log(entry);
 
   if (!entry.isIntersecting) return;
   entry.target.classList.remove('section--hidden');
@@ -232,7 +232,7 @@ const revealSection = function (entries, observer) {
 
 const sectionObserver = new IntersectionObserver(revealSection, {
   root: null,
-  threshold: 0.3,
+  threshold: 0.2,
 });
 
 allSections.forEach(function (section) {
@@ -240,6 +240,33 @@ allSections.forEach(function (section) {
   section.classList.add('section--hidden');
 });
 
+//////////////////////////////////////////
+// Lazy loading images
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+
+  // Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  // entry.target.classList.remove('lazy-img');//ten sposób małowydajny
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+    // zniknie tylko jak strona się załaduje
+  });
+
+  observer.unobserve(entry.target);
+};
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px', //żeby obrazki ladowali się wcześniej niż obrazek się pojawi, chociaż mi się podoba taki efekt z pojawianiem się
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
 // /////////////////
 // notes
 // ///////////////////////////////////////////////////////////////////////
